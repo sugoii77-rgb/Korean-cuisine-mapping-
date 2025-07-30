@@ -357,17 +357,34 @@ function initMap() {
 
 // 도시 마커 추가
 function addCityMarkers() {
+  console.log("Adding city markers...");
+  
   Object.keys(foodData.cities).forEach(cityKey => {
     const city = foodData.cities[cityKey];
+    console.log(`Adding marker for ${city.name} at ${city.coords}`);
     
-    // 마커 생성
-    const marker = L.marker(city.coords)
+    // 마커 생성 (빨간색으로 눈에 잘 띄게)
+    const redIcon = new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+    
+    const marker = L.marker(city.coords, { icon: redIcon })
       .addTo(map)
       .bindPopup(`<strong>${city.name}</strong><br>클릭하여 전통 요리 보기`)
-      .on('click', () => showCityFoods(cityKey));
+      .on('click', () => {
+        console.log(`Clicked on ${city.name}`);
+        showCityFoods(cityKey);
+      });
     
     markers[cityKey] = marker;
   });
+  
+  console.log(`Added ${Object.keys(markers).length} markers`);
 }
 
 // 도시 음식 표시
