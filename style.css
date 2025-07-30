@@ -1,4 +1,4 @@
-/* 한국 전통 요리 지도 - 완전한 스타일 (지도 짤림 문제 해결) */
+/* 한국 전통 요리 지도 - 4개 언어 지원 스타일 */
 
 * {
   margin: 0;
@@ -7,7 +7,7 @@
 }
 
 body {
-  font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+  font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', 'Segoe UI', 'Microsoft YaHei', 'Hiragino Sans', sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   height: 100vh;
   overflow: hidden;
@@ -28,6 +28,53 @@ header {
   text-align: center;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
+  position: relative;
+}
+
+/* 4개 언어 선택 버튼 */
+.language-selector {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.lang-btn {
+  padding: 5px 10px;
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+  border: 2px solid #667eea;
+  border-radius: 18px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  min-width: 60px;
+}
+
+.lang-btn:hover {
+  background: rgba(102, 126, 234, 0.2);
+  transform: translateY(-1px);
+}
+
+.lang-btn.active {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+/* About 버튼 스타일 개선 */
+header a {
+  transition: all 0.3s ease;
+}
+
+header a:hover {
+  background-color: #444 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4) !important;
 }
 
 header h1 {
@@ -86,16 +133,16 @@ button:hover {
   box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
 }
 
-/* 메인 컨테이너 - 지도 짤림 문제 해결 */
+/* 메인 컨테이너 */
 .main-container {
   flex: 1;
   display: flex;
   position: relative;
-  height: 0; /* flex: 1과 함께 사용하여 남은 공간 모두 차지 */
-  min-height: 0; /* flex 아이템이 내용보다 작아질 수 있도록 */
+  height: 0;
+  min-height: 0;
 }
 
-/* 지도 스타일 - 완전한 높이 제어 */
+/* 지도 스타일 */
 #map {
   flex: 1;
   width: 100% !important;
@@ -355,6 +402,33 @@ button:hover {
   font-size: 0.85rem;
 }
 
+/* 다국어 지원 안내 */
+.language-info {
+  background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+  padding: 18px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.language-info h3 {
+  margin-bottom: 8px;
+  color: #2c3e50;
+  font-size: 1.1rem;
+}
+
+.language-info p {
+  margin-bottom: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #34495e;
+}
+
+.language-info small {
+  color: #7f8c8d;
+  font-size: 0.85rem;
+}
+
 /* 검색 결과 */
 .search-results {
   padding: 0 25px 25px;
@@ -383,9 +457,21 @@ button:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* 푸터 제거 (공간 절약) */
-footer {
-  display: none;
+/* 언어별 폰트 최적화 */
+[lang="ko"] {
+  font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+}
+
+[lang="en"] {
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+[lang="zh"] {
+  font-family: 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+}
+
+[lang="ja"] {
+  font-family: 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
 }
 
 /* 반응형 디자인 */
@@ -421,6 +507,20 @@ footer {
   
   .sidebar.active {
     height: auto;
+  }
+  
+  /* 모바일에서 언어 선택 버튼 조정 */
+  .language-selector {
+    position: static;
+    justify-content: center;
+    margin-bottom: 10px;
+    gap: 4px;
+  }
+  
+  .lang-btn {
+    font-size: 11px;
+    padding: 4px 8px;
+    min-width: 50px;
   }
   
   header {
@@ -478,5 +578,15 @@ footer {
   
   .sidebar {
     width: 100%;
+  }
+  
+  .lang-btn {
+    font-size: 10px;
+    padding: 3px 6px;
+    min-width: 45px;
+  }
+  
+  .language-selector {
+    gap: 3px;
   }
 }
