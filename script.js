@@ -924,8 +924,26 @@ const additionalFoodsData = {
     }
   }
 };
-};
 
+// 추가 도시별 음식 매핑 (기존 citiesData에 추가할 부분)
+const additionalCityFoods = {
+  // 기존에 누락된 음식들을 각 도시에 추가
+  andong: ["andong_jjimdak", "andong_soju"], // 안동소주 추가
+  jeju: ["heukdwaeji", "galchi_jorim"], // 갈치조림 추가
+  gangneung: ["chodang_sundubu", "memil_makguksu"], // 초당순두부, 메밀막국수 추가
+  sokcho: ["ojingeo_sundae"], // 오징어순대 추가
+  daegu: ["makchang", "ttaro_gukbap"], // 막창, 따로국밥 추가
+  gyeongju: ["hwangnam_ppang"], // 황남빵 추가
+  pohang: ["mulhoe"], // 물회 추가
+  mokpo: ["hongeo"], // 홍어 추가
+  yeosu: ["dolsan_gat_kimchi"], // 돌산갓김치 추가
+  tongyeong: ["chungmu_gimbap"], // 충무김밥 추가
+  incheon: ["jajangmyeon", "ganghwa_sunmu"], // 자장면, 강화순무 추가
+  suwon: ["suwon_galbi"], // 수원갈비 추가
+  gwangju: ["mudeungsan_baeksuk"], // 무등산백숙 추가
+  daejeon: ["seongsimang_ppang"], // 성심당빵 추가
+  ulsan: ["jangsaengpo_gorae"] // 장생포고래고기 추가
+};
 // 언어 변경 함수
 function changeLanguage(lang) {
   console.log(`Changing language to: ${lang}`);
