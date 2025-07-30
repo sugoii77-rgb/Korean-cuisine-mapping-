@@ -1,189 +1,95 @@
 <!DOCTYPE html>
-<html lang="ko" id="htmlRoot">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">한국 전통 요리 지도 🍽️</title>
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="style.css">
+    <title>한국 전통 요리 지도</title>
     
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-K40DNLEEGN"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-K40DNLEEGN');
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-K40DNLEEGN');
     </script>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="app">
-        <!-- 헤더 -->
-        <header>
-            <!-- 언어 선택 버튼 (4개 언어) -->
-            <div class="language-selector">
-                <button onclick="changeLanguage('ko')" class="lang-btn" id="btnKo">🇰🇷 한국어</button>
-                <button onclick="changeLanguage('en')" class="lang-btn" id="btnEn">🇺🇸 English</button>
-                <button onclick="changeLanguage('zh')" class="lang-btn" id="btnZh">🇨🇳 中文</button>
-                <button onclick="changeLanguage('ja')" class="lang-btn" id="btnJa">🇯🇵 日本語</button>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1 id="app-title">한국 전통 요리 지도</h1>
             </div>
-            
-            <!-- About 버튼 -->
-            <div style="text-align:center; margin-top: 10px;">
-                <a href="about.html" target="_blank" 
-                   style="display: inline-block; padding: 10px 20px; background-color: #222; color: white; 
-                          border-radius: 30px; text-decoration: none; font-size: 16px; 
-                          font-family: 'Segoe UI', sans-serif; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
-                    🍽️ About 소개 페이지
+            <div class="header-center">
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <input type="text" id="food-search" placeholder="음식 이름으로 검색..." autocomplete="off">
+                    <div id="search-results" class="search-results"></div>
+                </div>
+            </div>
+            <div class="header-right">
+                <!-- Language Selector -->
+                <div class="language-selector">
+                    <button class="lang-btn active" data-lang="ko">한국어</button>
+                    <button class="lang-btn" data-lang="en">English</button>
+                    <button class="lang-btn" data-lang="ja">日本語</button>
+                    <button class="lang-btn" data-lang="zh">中文</button>
+                </div>
+                <!-- About Button -->
+                <a href="about.html" class="about-btn" title="소개">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <circle cx="12" cy="17" r="1"></circle>
+                    </svg>
                 </a>
-            </div>
-            
-            <h1 id="mainTitle">🗺️ 한국 전통 요리 지도</h1>
-            <p id="subtitle">지역을 클릭하거나 음식을 검색해보세요!</p>
-            
-            <!-- 검색 기능 -->
-            <div class="search-container">
-                <input 
-                    type="text" 
-                    id="searchInput" 
-                    placeholder="음식 이름을 입력하세요 (예: 불고기, 비빔밥)"
-                    onkeypress="handleEnter(event)"
-                >
-                <button onclick="searchFood()" id="searchBtn">🔍 검색</button>
             </div>
         </header>
 
-        <!-- 메인 컨테이너 -->
-        <div class="main-container">
-            <!-- 지도 -->
-            <div id="map"></div>
-            
-            <!-- 사이드바 -->
-            <div id="sidebar" class="sidebar">
-                <div class="welcome-message">
-                    <h2 id="welcomeTitle">🇰🇷 한국의 맛있는 여행</h2>
-                    <p id="welcomeText">지도에서 지역을 선택하면 그 지역의 전통 요리를 만날 수 있어요!</p>
-                    
-                    <div class="featured-regions">
-                        <h3 id="regionsTitle">📍 주요 지역</h3>
-                        <div class="region-grid">
-                            <div class="region-item" onclick="searchSpecificFood('불고기')">
-                                <strong id="seoul">서울</strong><br>
-                                <small id="seoulFoods">불고기, 평양냉면, 삼계탕</small>
-                            </div>
-                            <div class="region-item" onclick="searchSpecificFood('비빔밥')">
-                                <strong id="jeonju">전주</strong><br>
-                                <small id="jeonjuFoods">비빔밥, 콩나물국밥</small>
-                            </div>
-                            <div class="region-item" onclick="searchSpecificFood('밀면')">
-                                <strong id="busan">부산</strong><br>
-                                <small id="busanFoods">밀면, 돼지국밥, 어묵</small>
-                            </div>
-                            <div class="region-item" onclick="searchSpecificFood('안동찜닭')">
-                                <strong id="andong">안동</strong><br>
-                                <small id="andongFoods">안동찜닭, 안동소주</small>
-                            </div>
-                            <div class="region-item" onclick="searchSpecificFood('흑돼지')">
-                                <strong id="jeju">제주</strong><br>
-                                <small id="jejuFoods">흑돼지, 갈치조림</small>
-                            </div>
-                            <div class="region-item" onclick="searchSpecificFood('초당순두부')">
-                                <strong id="gangneung">강릉</strong><br>
-                                <small id="gangneungFoods">초당순두부, 메밀막국수</small>
-                            </div>
-                            <div class="region-item" onclick="searchSpecificFood('닭갈비')">
-                                <strong id="chuncheon">춘천</strong><br>
-                                <small id="chuncheonFoods">닭갈비</small>
-                            </div>
-                            <div class="region-item" onclick="searchSpecificFood('오징어순대')">
-                                <strong id="sokcho">속초</strong><br>
-                                <small id="sokchoFoods">오징어순대</small>
-                            </div>
-                            <div class="region-item" onclick="searchSpecificFood('막창')">
-                                <strong id="daegu">대구</strong><br>
-                                <small id="daeguFoods">막창, 따로국밥</small>
-                            </div>
-                            <div class="region-item" onclick="searchSpecificFood('황남빵')">
-                                <strong id="gyeongju">경주</strong><br>
-                                <small id="gyeongjuFoods">황남빵</small>
-                            </div>
-                            <div class="region-item" onclick="searchSpecificFood('물회')">
-                                <strong id="pohang">포항</strong><br>
-                                <small id="pohangFoods">물회</small>
-                            </div>
-                            <div class="region-item" onclick="searchSpecificFood('홍어')">
-                                <strong id="mokpo">목포</strong><br>
-                                <small id="mokpoFoods">홍어</small>
-                            </div>
-                            <div class="region-item" onclick="searchSpecificFood('돌산갓김치')">
-                                <strong id="yeosu">여수</strong><br>
-                                <small id="yeosuFoods">돌산갓김치</small>
-                            </div>
-                            <div class="region-item" onclick="searchSpecificFood('충무김밥')">
-                                <strong id="tongyeong">통영</strong><br>
-                                <small id="tongyeongFoods">충무김밥</small>
-                            </div>
-                            <div class="region-item" onclick="searchSpecificFood('자장면')">
-                                <strong id="incheon">인천</strong><br>
-                                <small id="incheonFoods">자장면, 강화순무</small>
-                            </div>
-                            <div class="region-item" onclick="searchSpecificFood('수원갈비')">
-                                <strong id="suwon">수원</strong><br>
-                                <small id="suwonFoods">수원갈비</small>
-                            </div>
-                            <div class="region-item" onclick="searchSpecificFood('무등산백숙')">
-                                <strong id="gwangju">광주</strong><br>
-                                <small id="gwangjuFoods">무등산백숙</small>
-                            </div>
-                            <div class="region-item" onclick="searchSpecificFood('성심당빵')">
-                                <strong id="daejeon">대전</strong><br>
-                                <small id="daejeonFoods">성심당빵</small>
-                            </div>
-                            <div class="region-item" onclick="searchSpecificFood('장생포고래고기')">
-                                <strong id="ulsan">울산</strong><br>
-                                <small id="ulsanFoods">장생포고래고기</small>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="instructions">
-                        <h3 id="instructionsTitle">💡 사용법</h3>
-                        <ul>
-                            <li id="instruction1">🗺️ 지도의 파란 마커를 클릭하세요</li>
-                            <li id="instruction2">🔍 위의 검색창에 음식 이름을 입력하세요</li>
-                            <li id="instruction3">📱 모바일에서도 편리하게 사용할 수 있어요</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="stats">
-                        <div class="stat-item">
-                            <strong>19</strong><br>
-                            <small id="statRegions">개 지역</small>
-                        </div>
-                        <div class="stat-item">
-                            <strong>50+</strong><br>
-                            <small id="statFoods">가지 요리</small>
-                        </div>
-                        <div class="stat-item">
-                            <strong>🇰🇷</strong><br>
-                            <small id="statTaste">한국의 맛</small>
-                        </div>
-                    </div>
-                    
-                    <!-- 4개 언어 지원 안내 -->
-                    <div class="language-info">
-                        <h3>🌍 다국어 지원</h3>
-                        <p>한국어 • English • 中文 • 日本語</p>
-                        <small>전 세계에 한국의 맛을 알리는 음식 문화 플랫폼</small>
-                    </div>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Map Container -->
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+
+            <!-- Food Details Panel -->
+            <div class="details-panel" id="details-panel">
+                <div class="panel-header">
+                    <h3 id="panel-title">음식을 선택해주세요</h3>
+                    <button class="close-btn" id="close-panel">&times;</button>
+                </div>
+                <div class="panel-content" id="panel-content">
+                    <p id="panel-placeholder">지도에서 도시를 클릭하고 음식을 선택하면 상세 정보가 표시됩니다.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- City Foods Modal -->
+        <div class="modal-overlay" id="modal-overlay">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3 id="modal-title">도시 음식</h3>
+                    <button class="close-btn" id="close-modal">&times;</button>
+                </div>
+                <div class="modal-content" id="modal-content">
+                    <div class="foods-list" id="foods-list"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript -->
+    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Custom JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>
