@@ -1,0 +1,16 @@
+{
+  "city_ko": "전주",
+  "city_en": "Jeonju",
+  "city_ja": "全州",
+  "city_zh": "全州",
+  "foods": [
+    {
+      "name_ko": "비빔밥",
+      "name_en": "Bibimbap",
+      "name_ja": "ビビンバ",
+      "name_zh": "拌饭",
+      "description": {
+        "ko": "전주 비빔밥은 한국을 대표하는 음식 중 하나로, 다양한 나물과 고기, 계란을 밥 위에 올리고 고추장을 넣어 비벼먹는 음식입니다. 전주는 조선왕조의 발상지로서 궁중요리의 전통이 깊게 뿌리내린 곳이며, 특히 전주 비빔밥은 그 정수를 보여줍니다. 10여 가지의 다채로운 나물이 각각의 맛과 영양을 자랑하며, 색깔의 조화가 아름다운 것으로도 유명합니다. 전주 한옥마을에서 맛보는 비빔밥은 한국의 전통 문화와 함께 특별한 경험을 선사합니다.",
+        "en": "Jeonju Bibimbap is one of Korea's representative dishes, featuring various seasoned vegetables, meat, and egg placed on rice and mixed with gochujang. Jeonju, as the birthplace of the Joseon Dynasty, is a place where royal court cuisine traditions are deeply rooted, and Jeonju Bibimbap particularly shows its essence. About ten different colorful vegetables each boast their own taste and nutrition, and the harmony of colors is also famous for its beauty. Bibimbap tasted in Jeonju Hanok Village offers a special experience along with Korean traditional culture.",
+        "ja": "全州ビビンバは韓国を代表する料理の一つで、様々なナムルと肉、卵をご飯の上に載せ、コチュジャンを入れて混ぜて食べる料理です。全州は朝鮮王朝の発祥地として宮廷料理の伝統が深く根ざした場所で、特に全州ビビンバはその神髄を示しています。10余種の多彩なナムルがそれぞれの味と栄養を誇り、色の調和が美しいことでも有名です。全州韓屋村で味わうビビンバは韓国の伝統文化と共に特別な体験を提供します。",
+        "zh": "全州拌饭是韩国代表性料理之一，将各种凉拌蔬菜、肉类、鸡蛋放在米饭上，加入韩式辣椒酱拌制食用。全州作为朝鲜王朝的发源地，是宫廷料理传统深深扎根的地方，特别是全州拌饭展
