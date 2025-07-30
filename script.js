@@ -51,6 +51,103 @@ const cities = {
     andong: { name: 'andong', coords: [36.5684, 128.7294], dataFile: 'andong.json' }
 };
 
+// Mock data for fallback
+const mockCityData = {
+    seoul: {
+        city_ko: '서울', city_en: 'Seoul', city_ja: 'ソウル', city_zh: '首尔',
+        foods: [
+            {
+                name_ko: '불고기', name_en: 'Bulgogi', name_ja: 'プルコギ', name_zh: '烤肉',
+                description: {
+                    ko: '불고기는 조선 시대부터 전해내려온 대표적인 한국 요리입니다. 얇게 썬 소고기를 간장 기반의 달콤한 양념에 재워 구운 음식으로, 서울을 비롯한 전국에서 사랑받는 국민 음식입니다.',
+                    en: 'Bulgogi is a representative Korean dish that has been passed down since the Joseon Dynasty. It features thinly sliced beef marinated in a sweet soy sauce-based seasoning and grilled.',
+                    ja: 'プルコギは朝鮮王朝時代から伝わる代表的な韓国料理です。薄切りの牛肉を醤油ベースの甘いタレに漬け込んで焼いた料理で、ソウルをはじめ全国で愛される国民料理です。',
+                    zh: '烤肉是从朝鲜王朝时期传承至今的代表性韩国料理。将薄切牛肉用酱油为基础的甜味调料腌制后烧烤，是包括首尔在内全国人民喜爱的国民料理。'
+                }
+            },
+            {
+                name_ko: '김치찌개', name_en: 'Kimchi Jjigae', name_ja: 'キムチチゲ', name_zh: '泡菜汤',
+                description: {
+                    ko: '김치찌개는 한국의 대표적인 국물 요리로, 신김치와 돼지고기, 두부 등을 넣고 끓인 매콤한 찌개입니다. 서울에서는 특히 겨울철 추위를 이겨내는 대표적인 음식으로 사랑받고 있습니다.',
+                    en: 'Kimchi Jjigae is a representative Korean soup dish, a spicy stew made with aged kimchi, pork, and tofu. In Seoul, it is especially beloved as a representative food for overcoming winter cold.',
+                    ja: 'キムチチゲは韓国の代表的なスープ料理で、古漬けキムチと豚肉、豆腐などを入れて煮込んだ辛い鍋料理です。ソウルでは特に冬の寒さを乗り越える代表的な料理として愛されています。',
+                    zh: '泡菜汤是韩国代表性的汤类料理，用陈年泡菜、猪肉、豆腐等煮制的辣味汤品。在首尔特别作为战胜冬季严寒的代表性食物而受到喜爱。'
+                }
+            }
+        ]
+    },
+    busan: {
+        city_ko: '부산', city_en: 'Busan', city_ja: '釜山', city_zh: '釜山',
+        foods: [
+            {
+                name_ko: '돼지국밥', name_en: 'Dwaeji Gukbap', name_ja: '豚クッパ', name_zh: '猪肉汤饭',
+                description: {
+                    ko: '돼지국밥은 부산의 대표 향토음식으로, 돼지뼈를 우린 진한 국물에 밥을 말아먹는 음식입니다. 부산 사람들의 소울푸드로 불립니다.',
+                    en: 'Dwaeji Gukbap is Busan\'s representative local dish, featuring rice served in a rich broth made from pork bones. It\'s called the soul food of Busan people.',
+                    ja: '豚クッパは釜山の代表的な郷土料理で、豚骨で取った濃厚なスープにご飯を入れて食べる料理です。釜山の人々のソウルフードと呼ばれています。',
+                    zh: '猪肉汤饭是釜山的代表性乡土料理，用猪骨熬制的浓郁汤汁泡饭食用。被称为釜山人的灵魂美食。'
+                }
+            }
+        ]
+    },
+    jeonju: {
+        city_ko: '전주', city_en: 'Jeonju', city_ja: '全州', city_zh: '全州',
+        foods: [
+            {
+                name_ko: '비빔밥', name_en: 'Bibimbap', name_ja: 'ビビンバ', name_zh: '拌饭',
+                description: {
+                    ko: '전주 비빔밥은 다양한 나물과 고기, 계란을 밥 위에 올리고 고추장을 넣어 비벼먹는 음식입니다. 영양 균형이 뛰어나고 색깔이 아름다운 대표적인 한식입니다.',
+                    en: 'Jeonju Bibimbap is a dish where various seasoned vegetables, meat, and egg are placed on rice and mixed with gochujang. It\'s a representative Korean dish with excellent nutritional balance and beautiful colors.',
+                    ja: '全州ビビンバは様々なナムルと肉、卵をご飯の上に載せ、コチュジャンを入れて混ぜて食べる料理です。栄養バランスが優れ、色彩が美しい代表的な韓国料理です。',
+                    zh: '全州拌饭是将各种凉拌蔬菜、肉类、鸡蛋放在米饭上，加入韩式辣椒酱拌制食用的料理。营养均衡且色彩美丽的代表性韩式料理。'
+                }
+            }
+        ]
+    },
+    jeju: {
+        city_ko: '제주', city_en: 'Jeju', city_ja: '済州', city_zh: '济州',
+        foods: [
+            {
+                name_ko: '흑돼지 구이', name_en: 'Black Pork BBQ', name_ja: '黒豚焼肉', name_zh: '黑猪肉烧烤',
+                description: {
+                    ko: '제주 흑돼지는 제주도의 특산품으로, 일반 돼지고기보다 육질이 부드럽고 고소한 맛이 특징입니다. 제주도 여행의 필수 먹거리로 인기가 높습니다.',
+                    en: 'Jeju Black Pork is a specialty of Jeju Island, characterized by tender meat and savory flavor compared to regular pork. It\'s a must-try food when traveling to Jeju Island.',
+                    ja: '済州黒豚は済州島の特産品で、一般の豚肉より肉質が柔らかく、香ばしい味が特徴です。済州島旅行の必須グルメとして人気が高いです。',
+                    zh: '济州黑猪肉是济州岛的特产，相比普通猪肉肉质更加柔嫩，味道香醇。是济州岛旅行的必尝美食。'
+                }
+            }
+        ]
+    },
+    gangneung: {
+        city_ko: '강릉', city_en: 'Gangneung', city_ja: '江陵', city_zh: '江陵',
+        foods: [
+            {
+                name_ko: '초당순두부', name_en: 'Chodang Sundubu', name_ja: '草堂純豆腐', name_zh: '草堂嫩豆腐',
+                description: {
+                    ko: '강릉 초당순두부는 바닷물로 만든 순두부로 유명합니다. 동해안의 깨끗한 바닷물을 간수로 사용하여 만든 순두부는 부드럽고 고소한 맛이 일품입니다.',
+                    en: 'Gangneung Chodang Sundubu is famous for soft tofu made with seawater. The soft tofu made using clean East Sea water as a coagulant has an exceptionally smooth and nutty flavor.',
+                    ja: '江陵草堂純豆腐は海水で作った純豆腐で有名です。東海岸のきれいな海水をにがりとして使用して作った純豆腐は、柔らかく香ばしい味が絶品です。',
+                    zh: '江陵草堂嫩豆腐以用海水制作的嫩豆腐而闻名。使用东海岸清洁海水作为凝固剂制作的嫩豆腐，口感柔滑香醇。'
+                }
+            }
+        ]
+    },
+    andong: {
+        city_ko: '안동', city_en: 'Andong', city_ja: '安東', city_zh: '安东',
+        foods: [
+            {
+                name_ko: '안동찜닭', name_en: 'Andong Jjimdak', name_ja: '安東チムタク', name_zh: '安东炖鸡',
+                description: {
+                    ko: '안동찜닭은 닭고기와 각종 채소, 당면을 간장 양념에 조린 안동의 대표 음식입니다. 달콤짭짤한 맛과 쫄깃한 식감이 특징입니다.',
+                    en: 'Andong Jjimdak is Andong\'s representative dish featuring chicken braised with various vegetables and glass noodles in soy sauce seasoning. It\'s characterized by sweet and savory flavors with chewy texture.',
+                    ja: '安東チムタクは鶏肉と各種野菜、春雨を醤油ベースのタレで煮込んだ安東の代表料理です。甘辛い味ともちもちした食感が特徴です。',
+                    zh: '安东炖鸡是用鸡肉和各种蔬菜、粉条用酱油调料炖制的安东代表料理。具有甜咸口味和有嚼劲的口感特色。'
+                }
+            }
+        ]
+    }
+};
+
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded, initializing app...');
@@ -80,10 +177,6 @@ function initializeMap() {
         crossOrigin: true
     }).addTo(map).on('tileerror', function(error) {
         console.error('Tile loading error:', error);
-        // Fallback to alternative tile server
-        L.tileLayer('https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
     });
     
     // Add city markers
@@ -101,6 +194,8 @@ function initializeMap() {
         marker.on('click', () => handleCityClick(cityKey));
         cityMarkers[cityKey] = marker;
     });
+    
+    console.log('Map initialized successfully');
 }
 
 function initializeEventListeners() {
@@ -144,7 +239,7 @@ async function loadInitialData() {
         console.error('Error loading initial data:', error);
         // If JSON loading fails, ensure mock data is available
         if (!allFoodsData['seoul']) {
-            getMockCityData('seoul');
+            allFoodsData['seoul'] = mockCityData['seoul'];
         }
         updateUI();
     }
@@ -166,45 +261,10 @@ async function loadCityData(cityKey) {
     } catch (error) {
         console.error(`Error loading data for ${cityKey}:`, error);
         // Return mock data if file doesn't exist
-        return getMockCityData(cityKey);
+        const data = mockCityData[cityKey];
+        allFoodsData[cityKey] = data;
+        return data;
     }
-}
-
-function getMockCityData(cityKey) {
-    const mockData = {
-        seoul: {
-            city_ko: '서울', city_en: 'Seoul', city_ja: 'ソウル', city_zh: '首尔',
-            foods: [
-                {
-                    name_ko: '초당순두부', name_en: 'Chodang Sundubu', name_ja: '草堂純豆腐', name_zh: '草堂嫩豆腐',
-                    description: {
-                        ko: '강릉 초당순두부는 바닷물로 만든 순두부로 유명합니다. 동해안의 깨끗한 바닷물을 간수로 사용하여 만든 순두부는 부드럽고 고소한 맛이 일품입니다.',
-                        en: 'Gangneung Chodang Sundubu is famous for soft tofu made with seawater. The soft tofu made using clean East Sea water as a coagulant has an exceptionally smooth and nutty flavor.',
-                        ja: '江陵草堂純豆腐は海水で作った純豆腐で有名です。東海岸のきれいな海水をにがりとして使用して作った純豆腐は、柔らかく香ばしい味が絶品です。',
-                        zh: '江陵草堂嫩豆腐以用海水制作的嫩豆腐而闻名。使用东海岸清洁海水作为凝固剂制作的嫩豆腐，口感柔滑香醇。'
-                    }
-                }
-            ]
-        },
-        andong: {
-            city_ko: '안동', city_en: 'Andong', city_ja: '安東', city_zh: '安东',
-            foods: [
-                {
-                    name_ko: '안동찜닭', name_en: 'Andong Jjimdak', name_ja: '安東チムタク', name_zh: '安东炖鸡',
-                    description: {
-                        ko: '안동찜닭은 닭고기와 각종 채소, 당면을 간장 양념에 조린 안동의 대표 음식입니다. 달콤짭짤한 맛과 쫄깃한 식감이 특징입니다.',
-                        en: 'Andong Jjimdak is Andong\'s representative dish featuring chicken braised with various vegetables and glass noodles in soy sauce seasoning. It\'s characterized by sweet and savory flavors with chewy texture.',
-                        ja: '安東チムタクは鶏肉と各種野菜、春雨を醤油ベースのタレで煮込んだ安東の代表料理です。甘辛い味ともちもちした食感が特徴です。',
-                        zh: '安东炖鸡是用鸡肉和各种蔬菜、粉条用酱油调料炖制的安东代表料理。具有甜咸口味和有嚼劲的口感特色。'
-                    }
-                }
-            ]
-        }
-    };
-    
-    const data = mockData[cityKey];
-    allFoodsData[cityKey] = data;
-    return data;
 }
 
 async function handleCityClick(cityKey) {
@@ -402,69 +462,4 @@ function updateUI() {
 // Utility function to get marker element (for Leaflet divIcon)
 L.Marker.prototype.getElement = function() {
     return this._icon;
-};ko: '불고기', name_en: 'Bulgogi', name_ja: 'プルコギ', name_zh: '烤肉',
-                    description: {
-                        ko: '불고기는 조선 시대부터 전해내려온 대표적인 한국 요리입니다. 얇게 썬 소고기를 간장 양념에 재워 구운 음식으로, 달콤하고 짭짤한 맛이 특징입니다.',
-                        en: 'Bulgogi is a representative Korean dish that has been passed down since the Joseon Dynasty. It features thinly sliced beef marinated in soy sauce and grilled, known for its sweet and savory flavor.',
-                        ja: 'プルコギは朝鮮王朝時代から伝わる代表的な韓国料理です。薄切りの牛肉を醤油ベースのタレに漬け込んで焼いた料理で、甘辛い味が特徴です。',
-                        zh: '烤肉是从朝鲜王朝时期传承至今的代表性韩国料理。将薄切牛肉用酱油调料腌制后烧烤，具有甜咸的特色口味。'
-                    }
-                },
-                {
-                    name_ko: '김치찌개', name_en: 'Kimchi Jjigae', name_ja: 'キムチチゲ', name_zh: '泡菜汤',
-                    description: {
-                        ko: '김치찌개는 한국의 대표적인 국물 요리로, 신김치와 돼지고기, 두부 등을 넣고 끓인 매콤한 찌개입니다. 특히 추운 겨울철에 인기가 높습니다.',
-                        en: 'Kimchi Jjigae is a representative Korean soup dish, a spicy stew made with aged kimchi, pork, and tofu. It is especially popular during cold winter months.',
-                        ja: 'キムチチゲは韓国の代表的なスープ料理で、古漬けキムチと豚肉、豆腐などを入れて煮込んだ辛い鍋料理です。特に寒い冬に人気があります。',
-                        zh: '泡菜汤是韩国代表性的汤类料理，用陈年泡菜、猪肉、豆腐等煮制的辣味汤品。在寒冷的冬季特别受欢迎。'
-                    }
-                }
-            ]
-        },
-        busan: {
-            city_ko: '부산', city_en: 'Busan', city_ja: '釜山', city_zh: '釜山',
-            foods: [
-                {
-                    name_ko: '돼지국밥', name_en: 'Dwaeji Gukbap', name_ja: '豚クッパ', name_zh: '猪肉汤饭',
-                    description: {
-                        ko: '돼지국밥은 부산의 대표 향토음식으로, 돼지뼈를 우린 진한 국물에 밥을 말아먹는 음식입니다. 부산 사람들의 소울푸드로 불립니다.',
-                        en: 'Dwaeji Gukbap is Busan\'s representative local dish, featuring rice served in a rich broth made from pork bones. It\'s called the soul food of Busan people.',
-                        ja: '豚クッパは釜山の代表的な郷土料理で、豚骨で取った濃厚なスープにご飯を入れて食べる料理です。釜山の人々のソウルフードと呼ばれています。',
-                        zh: '猪肉汤饭是釜山的代表性乡土料理，用猪骨熬制的浓郁汤汁泡饭食用。被称为釜山人的灵魂美食。'
-                    }
-                }
-            ]
-        },
-        jeonju: {
-            city_ko: '전주', city_en: 'Jeonju', city_ja: '全州', city_zh: '全州',
-            foods: [
-                {
-                    name_ko: '비빔밥', name_en: 'Bibimbap', name_ja: 'ビビンバ', name_zh: '拌饭',
-                    description: {
-                        ko: '전주 비빔밥은 다양한 나물과 고기, 계란을 밥 위에 올리고 고추장을 넣어 비벼먹는 음식입니다. 영양 균형이 뛰어나고 색깔이 아름다운 대표적인 한식입니다.',
-                        en: 'Jeonju Bibimbap is a dish where various seasoned vegetables, meat, and egg are placed on rice and mixed with gochujang. It\'s a representative Korean dish with excellent nutritional balance and beautiful colors.',
-                        ja: '全州ビビンバは様々なナムルと肉、卵をご飯の上に載せ、コチュジャンを入れて混ぜて食べる料理です。栄養バランスが優れ、色彩が美しい代表的な韓国料理です。',
-                        zh: '全州拌饭是将各种凉拌蔬菜、肉类、鸡蛋放在米饭上，加入韩式辣椒酱拌制食用的料理。营养均衡且色彩美丽的代表性韩式料理。'
-                    }
-                }
-            ]
-        },
-        jeju: {
-            city_ko: '제주', city_en: 'Jeju', city_ja: '済州', city_zh: '济州',
-            foods: [
-                {
-                    name_ko: '흑돼지 구이', name_en: 'Black Pork BBQ', name_ja: '黒豚焼肉', name_zh: '黑猪肉烧烤',
-                    description: {
-                        ko: '제주 흑돼지는 제주도의 특산품으로, 일반 돼지고기보다 육질이 부드럽고 고소한 맛이 특징입니다. 제주도 여행의 필수 먹거리로 인기가 높습니다.',
-                        en: 'Jeju Black Pork is a specialty of Jeju Island, characterized by tender meat and savory flavor compared to regular pork. It\'s a must-try food when traveling to Jeju Island.',
-                        ja: '済州黒豚は済州島の特産品で、一般の豚肉より肉質が柔らかく、香ばしい味が特徴です。済州島旅行の必須グルメとして人気が高いです。',
-                        zh: '济州黑猪肉是济州岛的特产，相比普通猪肉肉质更加柔嫩，味道香醇。是济州岛旅行的必尝美食。'
-                    }
-                }
-            ]
-        },
-        gangneung: {
-            city_ko: '강릉', city_en: 'Gangneung', city_ja: '江陵', city_zh: '江陵',
-            foods: [
-                {
-                    name_
+};
