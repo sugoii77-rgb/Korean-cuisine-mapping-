@@ -1,8 +1,9 @@
-// 한국 전통 요리 지도 - 다국어 지원 (한국어/영어)
+// 한국 전통 요리 지도 - JSON 파일 기반 버전
 let map;
 let markers = {};
 let selectedCity = null;
 let currentLanguage = 'ko';
+let foodData = null; // JSON에서 로드될 데이터
 
 // 다국어 번역 데이터
 const translations = {
@@ -32,7 +33,10 @@ const translations = {
     historyTitle: "🏛️ 역사",
     geographyTitle: "🗺️ 지리",
     cultureTitle: "🎭 문화", 
-    funFactTitle: "💡 흥미로운 사실"
+    funFactTitle: "💡 흥미로운 사실",
+    traditionalFoods: "의 전통 요리",
+    loading: "데이터를 불러오는 중...",
+    loadError: "데이터를 불러올 수 없습니다. 새로고침해주세요."
   },
   en: {
     pageTitle: "Korean Traditional Food Map 🍽️",
@@ -60,113 +64,44 @@ const translations = {
     historyTitle: "🏛️ History",
     geographyTitle: "🗺️ Geography", 
     cultureTitle: "🎭 Culture",
-    funFactTitle: "💡 Fun Facts"
+    funFactTitle: "💡 Fun Facts",
+    traditionalFoods: " Traditional Foods",
+    loading: "Loading data...",
+    loadError: "Failed to load data. Please refresh."
   }
 };
 
-// 지역별 음식 데이터 (한국어/영어)
-const foodData = {
-  cities: {
-    seoul: {
-      name: { ko: "서울", en: "Seoul" },
-      coords: [37.5665, 126.9780],
-      foods: {
-        bulgogi: {
-          name: { ko: "불고기", en: "Bulgogi" },
-          history: {
-            ko: "조선시대 궁중요리에서 시작된 불고기는 원래 '너비아니'라고 불렸습니다. 고기를 얇게 저며 양념에 재워 구운 요리로, 서울 양반가의 대표적인 접대 음식이었습니다.",
-            en: "Bulgogi originated from royal court cuisine during the Joseon Dynasty, originally called 'Neobiani'. This dish of thinly sliced, marinated grilled beef was a signature hospitality food of Seoul's aristocratic families."
-          },
-          geography: {
-            ko: "서울의 한강 유역은 예로부터 소를 기르기에 좋은 환경이었고, 궁궐과 양반가가 많아 고급 육류 요리 문화가 발달했습니다.",
-            en: "Seoul's Han River basin provided ideal conditions for cattle farming, and the presence of palaces and noble families fostered the development of refined meat cuisine culture."
-          },
-          culture: {
-            ko: "불고기는 한국의 '정(情)' 문화를 대표하는 음식입니다. 가족이나 손님과 함께 둘러앉아 구워 먹으며 소통하는 한국인의 공동체 문화를 보여줍니다.",
-            en: "Bulgogi represents Korea's 'jeong' (affection) culture. It embodies Korean communal culture where families and guests gather around to grill and share meals together."
-          },
-          fun_fact: {
-            ko: "불고기는 세계에서 가장 유명한 한국 음식 중 하나로, 'Korean BBQ'라는 이름으로 전 세계에 한국 음식을 알리는 대표 음식이 되었습니다.",
-            en: "Bulgogi is one of the world's most famous Korean dishes, becoming the flagship food that introduced Korean cuisine globally under the name 'Korean BBQ'."
-          }
-        },
-        pyeongyang_naengmyeon: {
-          name: { ko: "평양냉면", en: "Pyeongyang Naengmyeon" },
-          history: {
-            ko: "평양에서 시작된 냉면이 6.25 전쟁 이후 피난민들에 의해 서울로 전해졌습니다. 을지로와 명동 일대의 평양냉면집들이 그 전통을 이어가고 있습니다.",
-            en: "This cold noodle dish from Pyeongyang was brought to Seoul by refugees after the Korean War. Restaurants in Euljiro and Myeongdong continue this tradition today."
-          },
-          geography: {
-            ko: "원래 평양의 추운 겨울 날씨에 시원한 냉면을 먹는 문화에서 시작되었지만, 서울에서는 여름 별미로 자리잡았습니다.",
-            en: "Originally from Pyeongyang's cold winter culture of eating cool noodles, it has established itself as a summer delicacy in Seoul."
-          },
-          culture: {
-            ko: "분단의 아픔과 향수를 담은 음식입니다. 고향을 그리워하는 실향민들의 마음이 담긴 음식으로, 한국 현대사의 산증인이기도 합니다.",
-            en: "A dish that carries the pain of division and nostalgia. It embodies the longing hearts of displaced people and serves as a witness to modern Korean history."
-          },
-          fun_fact: {
-            ko: "진짜 평양냉면은 면을 가위로 자르지 않고 후루룩 소리내며 먹는 것이 예의입니다. 면을 끊는 것은 인연을 끊는다는 의미로 여겨졌기 때문입니다.",
-            en: "Authentic Pyeongyang naengmyeon should be eaten by slurping without cutting the noodles with scissors, as cutting was believed to sever relationships."
-          }
-        }
-      }
-    },
-    busan: {
-      name: { ko: "부산", en: "Busan" },
-      coords: [35.1796, 129.0756],
-      foods: {
-        milmyeon: {
-          name: { ko: "밀면", en: "Milmyeon" },
-          history: {
-            ko: "6.25 전쟁 당시 북한 실향민들이 평양냉면을 그리워하며 구하기 쉬운 밀가루로 만든 면요리입니다. 1950년대 부산 피난촌에서 시작되었습니다.",
-            en: "Created by North Korean refugees during the Korean War who missed Pyeongyang naengmyeon and used easily available wheat flour. It started in Busan refugee camps in the 1950s."
-          },
-          geography: {
-            ko: "부산항을 통해 들어온 미군 구호물자인 밀가루를 이용해 만든 음식으로, 항구도시 부산의 역사를 보여줍니다.",
-            en: "Made with wheat flour from US relief supplies that came through Busan Port, reflecting the history of this port city."
-          },
-          culture: {
-            ko: "전쟁의 아픔과 고향에 대한 그리움, 그리고 새로운 환경에 적응하려는 강인한 생존력이 담긴 음식입니다.",
-            en: "A dish that embodies the pain of war, longing for homeland, and the resilient survival spirit of adapting to new environments."
-          },
-          fun_fact: {
-            ko: "밀면은 냉면과 달리 면발이 쫄깃하고 탄력이 있어 '부산의 소울푸드'라고 불립니다.",
-            en: "Unlike naengmyeon, milmyeon has chewy and elastic noodles, earning it the nickname 'Busan's soul food'."
-          }
-        }
-      }
-    },
-    jeonju: {
-      name: { ko: "전주", en: "Jeonju" },
-      coords: [35.8242, 127.1480],
-      foods: {
-        bibimbap: {
-          name: { ko: "비빔밥", en: "Bibimbap" },
-          history: {
-            ko: "조선왕조의 발상지 전주에서 시작된 비빔밥은 궁중에서 먹던 골동반에서 유래되었습니다. 다양한 나물을 한 그릇에 담아 비벼 먹는 한국의 대표적인 건강식입니다.",
-            en: "Originating in Jeonju, the birthplace of the Joseon Dynasty, bibimbap derives from 'goldongban' eaten in the royal court. It's Korea's representative healthy dish mixing various vegetables in one bowl."
-          },
-          geography: {
-            ko: "전라북도의 비옥한 평야지대에서 나는 다양한 채소와 곡물을 이용해 만든 음식으로, 호남평야의 풍요로움을 보여줍니다.",
-            en: "Made with diverse vegetables and grains from Jeollabuk-do's fertile plains, showcasing the abundance of the Honam Plain."
-          },
-          culture: {
-            ko: "음양오행의 조화를 중시하는 한국의 전통 철학이 담긴 음식입니다. 다섯 가지 색깔의 나물로 건강과 조화를 추구합니다.",
-            en: "A dish embodying Korean traditional philosophy that values the harmony of yin-yang and five elements, pursuing health and balance through five colored vegetables."
-          },
-          fun_fact: {
-            ko: "전주 비빔밥은 2011년 CNN에서 선정한 '세계에서 가장 맛있는 음식 40선'에 선정되었습니다.",
-            en: "Jeonju bibimbap was selected as one of CNN's '40 Most Delicious Foods in the World' in 2011."
-          }
-        }
-      }
+// JSON 데이터 로드 함수
+async function loadFoodData() {
+  try {
+    const response = await fetch('foodData.json');
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
     }
-    // 더 많은 도시들... (간소화를 위해 3개만 예시)
+    foodData = await response.json();
+    console.log('Food data loaded successfully');
+    return true;
+  } catch (error) {
+    console.error('Error loading food data:', error);
+    showError();
+    return false;
   }
-};
+}
+
+// 에러 표시 함수
+function showError() {
+  const sidebar = document.getElementById('sidebar');
+  sidebar.innerHTML = `
+    <div class="welcome-message">
+      <h2 style="color: #e74c3c;">⚠️ ${translations[currentLanguage].loadError}</h2>
+      <button onclick="location.reload()" style="margin-top: 20px;">🔄 새로고침</button>
+    </div>
+  `;
+}
 
 // 언어 변경 함수
 function changeLanguage(lang) {
+  console.log(`Changing language to: ${lang}`);
   currentLanguage = lang;
   
   // HTML lang 속성 변경
@@ -182,12 +117,17 @@ function changeLanguage(lang) {
   updatePageTexts();
   
   // 지도 팝업 업데이트
-  updateMapPopups();
+  if (foodData) {
+    updateMapPopups();
+    updateRegionCards();
+  }
   
   // 사이드바가 열려있다면 업데이트
-  if (selectedCity) {
+  if (selectedCity && foodData) {
     showCityFoods(selectedCity);
   }
+  
+  console.log(`Language changed to: ${currentLanguage}`);
 }
 
 // 페이지 텍스트 업데이트
@@ -216,40 +156,79 @@ function updatePageTexts() {
   document.getElementById('statRegions').textContent = t.statRegions;
   document.getElementById('statFoods').textContent = t.statFoods;
   document.getElementById('statTaste').textContent = t.statTaste;
+}
+
+// 지역 카드 업데이트
+function updateRegionCards() {
+  if (!foodData) return;
   
-  // 도시 이름들
+  // 도시 이름과 음식 목록 업데이트
   Object.keys(foodData.cities).forEach(cityKey => {
-    const city = foodData.cities[cityKey];
+    const cityData = foodData.cities[cityKey];
+    
+    // 도시 이름 업데이트
     const cityElement = document.getElementById(cityKey);
-    if (cityElement) {
-      cityElement.textContent = city.name[currentLanguage];
+    if (cityElement && cityData.name) {
+      cityElement.textContent = cityData.name[currentLanguage];
+    }
+    
+    // 음식 목록 업데이트
+    const foodsElement = document.getElementById(cityKey + 'Foods');
+    if (foodsElement && cityData.foods) {
+      const foodNames = Object.values(cityData.foods).map(food => food.name[currentLanguage]);
+      foodsElement.textContent = foodNames.join(', ');
     }
   });
 }
 
 // 지도 팝업 업데이트
 function updateMapPopups() {
+  if (!foodData) return;
+  
   Object.keys(markers).forEach(cityKey => {
     const city = foodData.cities[cityKey];
-    const popup = `<strong>${city.name[currentLanguage]}</strong><br>${translations[currentLanguage].clickToSee}`;
-    markers[cityKey].setPopupContent(popup);
+    if (city && city.name && city.name[currentLanguage]) {
+      const popup = `<strong>${city.name[currentLanguage]}</strong><br>${translations[currentLanguage].clickToSee}`;
+      markers[cityKey].setPopupContent(popup);
+    }
   });
 }
 
-// 페이지 로드 시 지도 초기화
-document.addEventListener('DOMContentLoaded', function() {
+// 페이지 로드 시 초기화
+document.addEventListener('DOMContentLoaded', async function() {
+  // 로딩 메시지 표시
+  const sidebar = document.getElementById('sidebar');
+  sidebar.innerHTML = `
+    <div class="welcome-message">
+      <h2>⏳ ${translations[currentLanguage].loading}</h2>
+    </div>
+  `;
+  
   // 기본 언어 설정
   document.getElementById('btnKo').classList.add('active');
   updatePageTexts();
   
-  // DOM이 완전히 로드된 후 약간의 지연을 두고 지도 초기화
-  setTimeout(() => {
-    initMap();
-  }, 300);
+  // 데이터 로드
+  const dataLoaded = await loadFoodData();
+  
+  if (dataLoaded) {
+    // 지역 카드 업데이트
+    updateRegionCards();
+    
+    // 지도 초기화
+    setTimeout(() => {
+      initMap();
+    }, 300);
+  }
 });
 
 // 지도 초기화
 function initMap() {
+  if (!foodData) {
+    console.error('Food data not loaded');
+    return;
+  }
+  
   // 기존 지도가 있다면 제거
   if (map) {
     map.remove();
@@ -280,24 +259,17 @@ function initMap() {
     detectRetina: true
   }).addTo(map);
   
-  // 지도 크기 강제 재조정 (여러 번 시도)
+  // 지도 크기 강제 재조정
   setTimeout(() => {
     map.invalidateSize(true);
-    // 모든 마커 추가
     addCityMarkers();
   }, 100);
-  
-  setTimeout(() => {
-    map.invalidateSize(true);
-  }, 500);
-  
-  setTimeout(() => {
-    map.invalidateSize(true);
-  }, 1000);
 }
 
 // 도시 마커 추가
 function addCityMarkers() {
+  if (!foodData) return;
+  
   console.log("Adding city markers...");
   
   Object.keys(foodData.cities).forEach(cityKey => {
@@ -321,6 +293,8 @@ function addCityMarkers() {
 
 // 도시 음식 표시
 function showCityFoods(cityKey) {
+  if (!foodData) return;
+  
   const city = foodData.cities[cityKey];
   const sidebar = document.getElementById('sidebar');
   
@@ -346,7 +320,7 @@ function showCityFoods(cityKey) {
   // 사이드바 내용 생성
   let sidebarContent = `
     <div class="city-header">
-      <h2>${city.name[currentLanguage]}${currentLanguage === 'ko' ? '의 전통 요리' : ' Traditional Foods'}</h2>
+      <h2>${city.name[currentLanguage]}${translations[currentLanguage].traditionalFoods}</h2>
       <button id="closeSidebar" onclick="closeSidebar()">${translations[currentLanguage].close}</button>
     </div>
     <div class="food-cards">
@@ -370,6 +344,8 @@ function showCityFoods(cityKey) {
 
 // 음식 상세 정보 표시
 function showFoodDetail(cityKey, foodKey) {
+  if (!foodData) return;
+  
   const city = foodData.cities[cityKey];
   const food = city.foods[foodKey];
   const sidebar = document.getElementById('sidebar');
@@ -425,6 +401,8 @@ function closeSidebar() {
 
 // 검색 기능
 function searchFood() {
+  if (!foodData) return;
+  
   const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
   
   if (!searchTerm) {
@@ -436,7 +414,7 @@ function searchFood() {
   let foundCity = null;
   let foundFood = null;
   
-  // 모든 도시의 음식 검색 (현재 언어로)
+  // 모든 도시의 음식 검색
   Object.keys(foodData.cities).forEach(cityKey => {
     const city = foodData.cities[cityKey];
     Object.keys(city.foods).forEach(foodKey => {
@@ -470,6 +448,8 @@ function searchFood() {
 
 // 사용 가능한 음식 목록 표시
 function showAvailableFoods() {
+  if (!foodData) return;
+  
   const sidebar = document.getElementById('sidebar');
   const t = translations[currentLanguage];
   let foodList = [];
