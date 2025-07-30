@@ -363,17 +363,8 @@ function addCityMarkers() {
     const city = foodData.cities[cityKey];
     console.log(`Adding marker for ${city.name} at ${city.coords}`);
     
-    // 마커 생성 (빨간색으로 눈에 잘 띄게)
-    const redIcon = new L.Icon({
-      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41]
-    });
-    
-    const marker = L.marker(city.coords, { icon: redIcon })
+    // 기본 파란색 마커 사용 (아이콘 로딩 문제 방지)
+    const marker = L.marker(city.coords)
       .addTo(map)
       .bindPopup(`<strong>${city.name}</strong><br>클릭하여 전통 요리 보기`)
       .on('click', () => {
