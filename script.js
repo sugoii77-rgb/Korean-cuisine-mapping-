@@ -53,9 +53,19 @@ const cities = {
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, initializing app...');
+    
+    // Check if Leaflet is loaded
+    if (typeof L === 'undefined') {
+        console.error('Leaflet is not loaded!');
+        return;
+    }
+    
     initializeMap();
     initializeEventListeners();
     loadInitialData();
+    
+    console.log('App initialization complete');
 });
 
 function initializeMap() {
@@ -126,11 +136,17 @@ function initializeEventListeners() {
 
 async function loadInitialData() {
     try {
-        // Load Seoul data initially
+        // First try to load Seoul data from JSON file
         await loadCityData('seoul');
         updateUI();
+        console.log('Data loaded successfully');
     } catch (error) {
         console.error('Error loading initial data:', error);
+        // If JSON loading fails, ensure mock data is available
+        if (!allFoodsData['seoul']) {
+            getMockCityData('seoul');
+        }
+        updateUI();
     }
 }
 
