@@ -1,0 +1,44 @@
+{
+  "city_ko": "부산",
+  "city_en": "Busan",
+  "city_ja": "釜山",
+  "city_zh": "釜山",
+  "foods": [
+    {
+      "name_ko": "돼지국밥",
+      "name_en": "Dwaeji Gukbap",
+      "name_ja": "豚クッパ",
+      "name_zh": "猪肉汤饭",
+      "description": {
+        "ko": "돼지국밥은 부산의 대표 향토음식으로, 돼지뼈를 오랫동안 우린 진한 국물에 밥을 말아먹는 음식입니다. 한국전쟁 이후 부산 피난민들이 돼지 내장으로 만들어 먹기 시작한 것이 유래로, 현재는 부산 사람들의 소울푸드로 불립니다. 특히 새벽 해장용으로 인기가 높으며, 부산의 서민적이고 따뜻한 정을 느낄 수 있는 대표적인 음식입니다. 하얀 국물에 부추와 새우젓을 넣어 먹으면 더욱 깊은 맛을 즐길 수 있습니다.",
+        "en": "Dwaeji Gukbap is Busan's representative local dish, featuring rice served in a rich broth made from pork bones boiled for a long time. It originated when refugees in Busan after the Korean War began making it with pork offal, and is now called the soul food of Busan people. It's particularly popular as a hangover cure in the early morning, and is a representative dish where you can feel the common people's warm affection of Busan. Adding chives and salted shrimp to the white broth enhances the deep flavor.",
+        "ja": "豚クッパは釜山の代表的な郷土料理で、豚骨を長時間煮込んだ濃厚なスープにご飯を入れて食べる料理です。朝鮮戦争後、釜山の避難民が豚の内臓で作って食べ始めたのが由来で、現在は釜山の人々のソウルフードと呼ばれています。特に早朝の二日酔い解消用として人気が高く、釜山の庶民的で温かい情を感じられる代表的な料理です。白いスープにニラと塩辛を入れて食べるとより深い味を楽しめます。",
+        "zh": "猪肉汤饭是釜山的代表性乡土料理，用猪骨长时间熬制的浓郁汤汁泡饭食用。起源于朝鲜战争后釜山难民开始用猪内脏制作食用，现在被称为釜山人的灵魂美食。特别作为清晨解酒用而人气很高，是能够感受到釜山平民温暖情怀的代表性料理。在白色汤汁中加入韭菜和虾酱食用能享受到更深层的味道。"
+      }
+    },
+    {
+      "name_ko": "밀면",
+      "name_en": "Milmyeon",
+      "name_ja": "ミルミョン",
+      "name_zh": "小麦面",
+      "description": {
+        "ko": "밀면은 부산의 특산 냉면으로, 밀가루와 고구마 전분을 섞어 만든 면을 차가운 육수에 말아먹는 음식입니다. 1950년대 함경도 출신 피난민들이 메밀 대신 밀가루로 만들어 시작된 것으로, 부산만의 독특한 면 요리입니다. 평양냉면보다 부드럽고 쫄깃한 식감이 특징이며, 여름철 부산의 무더위를 시원하게 날려주는 대표적인 별미입니다. 달콤새콤한 양념장을 넣어 비벼먹는 비빔밀면도 인기입니다.",
+        "en": "Milmyeon is Busan's specialty cold noodles, featuring noodles made from a mixture of wheat flour and sweet potato starch served in cold broth. It originated in the 1950s when refugees from Hamgyong Province made it with wheat flour instead of buckwheat, making it a unique noodle dish exclusive to Busan. It's characterized by a softer and chewier texture than Pyongyang naengmyeon, and is a representative delicacy that refreshingly beats Busan's summer heat. Bibim milmyeon, mixed with sweet and sour seasoning sauce, is also popular.",
+        "ja": "ミルミョンは釜山の特産冷麺で、小麦粉とサツマイモでんぷんを混ぜて作った麺を冷たいスープに入れて食べる料理です。1950年代に咸鏡道出身の避難民が蕎麦の代わりに小麦粉で作り始めたもので、釜山だけの独特な麺料理です。平壌冷麺より柔らかくもちもちした食感が特徴で、夏の釜山の蒸し暑さを爽やかに吹き飛ばしてくれる代表的な珍味です。甘酸っぱい調味料を入れて混ぜて食べるビビムミルミョンも人気です。",
+        "zh": "小麦面是釜山的特产冷面，用小麦粉和红薯淀粉混合制作的面条配冷汤食用。起源于1950年代咸镜道出身的难民用小麦粉代替荞麦制作，是釜山独有的特色面条料理。具有比平壤冷面更柔软有嚼劲的口感特色，是清爽消解釜山夏季酷暑的代表性美食。加入酸甜调味酱拌制食用的拌小麦面也很受欢迎。"
+      }
+    },
+    {
+      "name_ko": "씨앗호떡",
+      "name_en": "Ssiat Hotteok",
+      "name_ja": "シアットホットク",
+      "name_zh": "种子糖饼",
+      "description": {
+        "ko": "씨앗호떡은 부산의 대표적인 길거리 음식으로, 일반 호떡과 달리 견과류와 씨앗이 들어간 것이 특징입니다. 해바라기씨, 호박씨, 잣 등 다양한 견과류가 들어가 고소하고 바삭한 식감을 제공합니다. 부산의 국제시장과 자갈치시장 등에서 쉽게 찾아볼 수 있으며, 겨울철 따뜻한 간식으로 특히 인기가 높습니다. 겉은 바삭하고 속은 달콤한 맛이 일품이며, 부산 여행의 필수 먹거리 중 하나입니다.",
+        "en": "Ssiat Hotteok is Busan's representative street food, characterized by containing nuts and seeds unlike regular hotteok. It includes various nuts like sunflower seeds, pumpkin seeds, and pine nuts, providing a nutty and crispy texture. It can easily be found at Busan's Gukje Market and Jagalchi Market, and is especially popular as a warm snack in winter. The crispy exterior and sweet interior taste is excellent, making it one of the must-try foods when traveling to Busan.",
+        "ja": "シアットホットクは釜山の代表的な屋台料理で、一般的なホットクとは異なりナッツや種が入っているのが特徴です。ひまわりの種、かぼちゃの種、松の実など様々なナッツが入っており、香ばしくサクサクした食感を提供します。釜山の国際市場やチャガルチ市場などで簡単に見つけることができ、冬の温かい間食として特に人気が高いです。外はサクサク、中は甘い味が絶品で、釜山旅行の必須グルメの一つです。",
+        "zh": "种子糖饼是釜山代表性的街头美食，与一般糖饼不同，特色是里面加入了坚果和种子。加入葵花籽、南瓜籽、松子等各种坚果，提供香脆的口感。在釜山的国际市场和札嘎其市场等地容易找到，特别作为冬季温暖小食而人气很高。外酥内甜的味道堪称一绝，是釜山旅行必尝美食之一。"
+      }
+    }
+  ]
+}
