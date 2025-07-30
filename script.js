@@ -62,10 +62,19 @@ function initializeMap() {
     // Initialize Leaflet map
     map = L.map('map').setView([36.5, 127.5], 7);
     
-    // Add OpenStreetMap tiles
+    // Add OpenStreetMap tiles with error handling
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 18,
+        detectRetina: true,
+        crossOrigin: true
+    }).addTo(map).on('tileerror', function(error) {
+        console.error('Tile loading error:', error);
+        // Fallback to alternative tile server
+        L.tileLayer('https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+    });
     
     // Add city markers
     Object.keys(cities).forEach(cityKey => {
