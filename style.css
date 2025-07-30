@@ -160,6 +160,17 @@ body {
 #map {
     height: 100%;
     width: 100%;
+    background: #f0f0f0;
+    z-index: 1;
+}
+
+/* Ensure Leaflet CSS loads properly */
+.leaflet-container {
+    background: #ddd;
+}
+
+.leaflet-tile {
+    filter: hue-rotate(0deg);
 }
 
 /* Custom Marker Styles */
