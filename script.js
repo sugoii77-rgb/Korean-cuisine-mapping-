@@ -340,8 +340,16 @@ function initMap() {
   
   // 타일 레이어 추가
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
+    attribution: '© OpenStreetMap contributors',
+    maxZoom: 18,
+    tileSize: 256,
+    zoomOffset: 0
   }).addTo(map);
+  
+  // 지도 크기 재조정 (렌더링 문제 해결)
+  setTimeout(() => {
+    map.invalidateSize();
+  }, 100);
   
   // 도시 마커 추가
   addCityMarkers();
