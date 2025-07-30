@@ -1,0 +1,194 @@
+{
+  "cities": {
+    "seoul": {
+      "name": {
+        "ko": "서울",
+        "en": "Seoul", 
+        "zh": "首尔",
+        "ja": "ソウル"
+      },
+      "coords": [37.5665, 126.9780],
+      "foods": ["bulgogi", "pyeongyang_naengmyeon", "samgyetang"]
+    },
+    "busan": {
+      "name": {
+        "ko": "부산",
+        "en": "Busan",
+        "zh": "釜山", 
+        "ja": "釜山"
+      },
+      "coords": [35.1796, 129.0756],
+      "foods": ["milmyeon", "dwaeji_gukbap", "eomuk"]
+    },
+    "jeonju": {
+      "name": {
+        "ko": "전주",
+        "en": "Jeonju",
+        "zh": "全州",
+        "ja": "全州"
+      },
+      "coords": [35.8242, 127.1480],
+      "foods": ["bibimbap", "kongnamul_gukbap", "jeonju_hanjeongsik"]
+    },
+    "andong": {
+      "name": {
+        "ko": "안동",
+        "en": "Andong",
+        "zh": "安东",
+        "ja": "安東"
+      },
+      "coords": [36.5684, 128.7294],
+      "foods": ["andong_jjimdak", "andong_soju"]
+    },
+    "jeju": {
+      "name": {
+        "ko": "제주",
+        "en": "Jeju",
+        "zh": "济州",
+        "ja": "済州"
+      },
+      "coords": [33.4996, 126.5312],
+      "foods": ["heukdwaeji", "galchi_jorim"]
+    },
+    "gangneung": {
+      "name": {
+        "ko": "강릉",
+        "en": "Gangneung",
+        "zh": "江陵",
+        "ja": "江陵"
+      },
+      "coords": [37.7519, 128.8761],
+      "foods": ["chodang_sundubu", "memil_makguksu"]
+    },
+    "chuncheon": {
+      "name": {
+        "ko": "춘천",
+        "en": "Chuncheon",
+        "zh": "春川",
+        "ja": "春川"
+      },
+      "coords": [37.8813, 127.7298],
+      "foods": ["dakgalbi"]
+    },
+    "sokcho": {
+      "name": {
+        "ko": "속초",
+        "en": "Sokcho",
+        "zh": "束草",
+        "ja": "束草"
+      },
+      "coords": [38.2070, 128.5919],
+      "foods": ["ojingeo_sundae"]
+    },
+    "daegu": {
+      "name": {
+        "ko": "대구",
+        "en": "Daegu",
+        "zh": "大邱",
+        "ja": "大邱"
+      },
+      "coords": [35.8714, 128.6014],
+      "foods": ["makchang", "ttaro_gukbap"]
+    },
+    "gyeongju": {
+      "name": {
+        "ko": "경주",
+        "en": "Gyeongju",
+        "zh": "庆州",
+        "ja": "慶州"
+      },
+      "coords": [35.8562, 129.2247],
+      "foods": ["hwangnam_ppang"]
+    },
+    "pohang": {
+      "name": {
+        "ko": "포항",
+        "en": "Pohang",
+        "zh": "浦项",
+        "ja": "浦項"
+      },
+      "coords": [36.0190, 129.3435],
+      "foods": ["mulhoe"]
+    },
+    "mokpo": {
+      "name": {
+        "ko": "목포",
+        "en": "Mokpo",
+        "zh": "木浦",
+        "ja": "木浦"
+      },
+      "coords": [34.8118, 126.3922],
+      "foods": ["hongeo"]
+    },
+    "yeosu": {
+      "name": {
+        "ko": "여수",
+        "en": "Yeosu",
+        "zh": "丽水",
+        "ja": "麗水"
+      },
+      "coords": [34.7604, 127.6622],
+      "foods": ["dolsan_gat_kimchi"]
+    },
+    "tongyeong": {
+      "name": {
+        "ko": "통영",
+        "en": "Tongyeong",
+        "zh": "统营",
+        "ja": "統営"
+      },
+      "coords": [34.8544, 128.4332],
+      "foods": ["chungmu_gimbap"]
+    },
+    "incheon": {
+      "name": {
+        "ko": "인천",
+        "en": "Incheon",
+        "zh": "仁川",
+        "ja": "仁川"
+      },
+      "coords": [37.4563, 126.7052],
+      "foods": ["jajangmyeon", "ganghwa_sunmu"]
+    },
+    "suwon": {
+      "name": {
+        "ko": "수원",
+        "en": "Suwon",
+        "zh": "水原",
+        "ja": "水原"
+      },
+      "coords": [37.2636, 127.0286],
+      "foods": ["suwon_galbi"]
+    },
+    "gwangju": {
+      "name": {
+        "ko": "광주",
+        "en": "Gwangju",
+        "zh": "光州",
+        "ja": "光州"
+      },
+      "coords": [35.1595, 126.8526],
+      "foods": ["mudeungsan_baeksuk"]
+    },
+    "daejeon": {
+      "name": {
+        "ko": "대전",
+        "en": "Daejeon",
+        "zh": "大田",
+        "ja": "大田"
+      },
+      "coords": [36.3504, 127.3845],
+      "foods": ["seongsimang_ppang"]
+    },
+    "ulsan": {
+      "name": {
+        "ko": "울산",
+        "en": "Ulsan",
+        "zh": "蔚山",
+        "ja": "蔚山"
+      },
+      "coords": [35.5384, 129.3114],
+      "foods": ["jangsaengpo_gorae"]
+    }
+  }
+}
